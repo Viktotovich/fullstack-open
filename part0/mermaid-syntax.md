@@ -1,3 +1,4 @@
+````mermaid
 %% Diagram depicting the situation where the user opens a webapp
 %% at https://studies.cs.helsinki.fi/exampleapp/spa.
 sequenceDiagram
@@ -25,7 +26,8 @@ participant Server
     deactivate Server
 
     Browser -->> [*]: User Opens SPA
-
+```
+```mermaid
 %% Diagram depicting the flow when a user opens the single-page app (SPA)
 sequenceDiagram
 participant User
@@ -39,7 +41,8 @@ participant Server
     Server -->> Browser: 200 OK (HTML file)
     deactivate Server
     Browser -->> User: SPA loaded
-
+```
+```mermaid
 %% Diagram depicting the flow when a user submits a form
 sequenceDiagram
 participant User
@@ -54,3 +57,5 @@ participant Server
     deactivate Server
     Browser -->> User: Content reloaded
     [*] --> [fin]: End of process
+```
+````
