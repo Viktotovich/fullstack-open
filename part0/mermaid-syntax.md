@@ -1,43 +1,56 @@
+%% Diagram depicting the situation where the user opens a webapp
+%% at https://studies.cs.helsinki.fi/exampleapp/spa.
 sequenceDiagram
-A[PageOpened] -->|GET| B(Server)
-Server -->[Browser] --> [HTMLdocument]
-activate server
-server -->browser: the HTML file
-deactivate server
+participant Browser
+participant Server
 
-    browser -->[server] -->|GET| the css file
-    activate server
-    server -->browser: the CSS file
-    deactivate server
+    Browser ->> Server: GET / (HTML document)
+    activate Server
+    Server -->> Browser: HTML file
+    deactivate Server
 
-    browser -->[server] -->|GET| the JS file
-    activate server
-    server -->browser: the JS file
-    deactivate server
+    Browser ->> Server: GET /style.css (CSS file)
+    activate Server
+    Server -->> Browser: CSS file
+    deactivate Server
 
-    browser -->[server] -->|GET| JSON
-    activate server
-    server -->browser: [{"content": "The JSON content", "date": "2024-10-17"}, ...]
-    deactivate server
+    Browser ->> Server: GET /main.js (JavaScript file)
+    activate Server
+    Server -->> Browser: JavaScript file
+    deactivate Server
 
-end
+    Browser ->> Server: GET /data.json
+    activate Server
+    Server -->> Browser: [{"content": "The JSON content", "date": "2024-10-17"}, ...]
+    deactivate Server
 
-Create a diagram depicting the situation where the user goes to the single-page app version of the notes app at https://studies.cs.helsinki.fi/exampleapp/spa.
+    Browser -->> [*]: User Opens SPA
 
+%% Diagram depicting the flow when a user opens the single-page app (SPA)
 sequenceDiagram
-[*] --> User Opens SPA
-User Opens Spa --> Browser Sends GET Request
-Browser Sends GET Request --> 200 Header
-end
+participant User
+participant Browser
+participant Server
 
+    [*] --> User: Opens SPA
+    User ->> Browser: Sends GET request for the SPA
+    Browser ->> Server: GET / (HTML document)
+    activate Server
+    Server -->> Browser: 200 OK (HTML file)
+    deactivate Server
+    Browser -->> User: SPA loaded
+
+%% Diagram depicting the flow when a user submits a form
 sequenceDiagram
-[*] --> User Submits Form
-User Submits Form --> Browser
-User Submits Form --> Content Reloaded
-Content Reloader --> [fin]
-Browser --> Post
-Post --> Server
-Server --> Responce
-Response --> 201 Header
-201 Header --> [fin]
-end
+participant User
+participant Browser
+participant Server
+
+    [*] --> User: Submits form
+    User ->> Browser: Form submission
+    Browser ->> Server: POST /submit
+    activate Server
+    Server -->> Browser: Response (201 Created)
+    deactivate Server
+    Browser -->> User: Content reloaded
+    [*] --> [fin]: End of process
